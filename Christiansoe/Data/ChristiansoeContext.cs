@@ -15,7 +15,7 @@ namespace Christiansoe.Data
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Data Source=joergenkea.database.windows.net;Initial Catalog=Christiansoe;Persist Security Info=True;User ID=joergen;Password=Kea12345");
+            optionsBuilder.UseSqlServer(@"Data Source=phillipkea.database.windows.net;Initial Catalog=Christiansoe;Persist Security Info=True;User ID=phillip;Password=Kea@1234");
         }
 
         public DbSet<Route> Route { get; set; }
