@@ -15,6 +15,8 @@
 
         public string VideoUrl { get; set; }
 
+        //JØRGEN SKIIIIIIIR
+
 
 
 
