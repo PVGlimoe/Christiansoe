@@ -15,7 +15,10 @@
 
         public string VideoUrl { get; set; }
 
+        public string Dezzznutzzz { get; set; }
+
         //JØRGEN SKIIIIIIIR
+
 
 
 
