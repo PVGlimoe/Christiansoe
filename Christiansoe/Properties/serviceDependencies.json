@@ -1,12 +1,12 @@
 {
   "dependencies": {
-    "mssql1": {
-      "type": "mssql",
-      "connectionId": "ConnectionStrings:ChristiansoeContext"
-    },
     "mssql2": {
       "type": "mssql",
       "connectionId": "ChristiansoeContext"
+    },
+    "mssql1": {
+      "type": "mssql",
+      "connectionId": "ConnectionStrings:ChristiansoeContext"
     }
   }
 }
