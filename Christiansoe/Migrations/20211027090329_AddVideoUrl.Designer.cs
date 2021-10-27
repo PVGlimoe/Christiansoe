@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Christiansoe.Migrations
 {
     [DbContext(typeof(ChristiansoeContext))]
-    [Migration("20211021145523_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20211027090329_AddVideoUrl")]
+    partial class AddVideoUrl
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -61,6 +61,9 @@ namespace Christiansoe.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SoundUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("VideoUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

@@ -13,6 +13,7 @@
 
         public string SoundUrl { get; set; }
 
+        public string VideoUrl { get; set; }
 
 
 
