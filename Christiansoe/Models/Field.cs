@@ -17,6 +17,8 @@
 
         public string Dezzznutzzz { get; set; }
 
+        public string Test { get; set; }
+
         //JØRGEN SKIIIIIIIR
 
 
