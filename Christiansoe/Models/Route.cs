@@ -12,8 +12,6 @@ namespace Christiansoe.Models
 
         public string Name { get; set; }
 
-        public string Theme { get; set; }
-
         public double Length { get; set; }
 
         public int HikingTime { get; set; }

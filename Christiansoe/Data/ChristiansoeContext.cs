@@ -25,6 +25,8 @@ namespace Christiansoe.Data
         public DbSet<Field> Field { get; set; }
 
         public DbSet<BingoBoard> BingoBoard { get; set; }
+
+        public DbSet<Christiansoe.Models.Theme> Theme { get; set; }
     }
 
 
