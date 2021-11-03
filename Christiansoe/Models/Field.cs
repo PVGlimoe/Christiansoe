@@ -21,13 +21,5 @@ namespace Christiansoe.Models
         public int EndMonth { get; set; }
 
 
-
-
-
-
-
-
-
-
     }
 }

@@ -21,18 +21,49 @@ namespace Christiansoe.Controllers
             _context = context;
         }
 
+        private Boolean monthBetween(int startMonth, int endMonth, int month)
+        {
+            if(startMonth == 0 || endMonth == 0)
+            {
+                return true;
+            }
+            while(startMonth != month)
+            {
+                if(startMonth == endMonth)
+                {
+                    return false;
+                }
+                if(startMonth == 12)
+                {
+                    startMonth = 1;
+                }
+                else
+                {
+                    startMonth += 1;
+                }
+            }
+            return true;
+        }
+
         // GET: api/BingoBoards
         [HttpGet]
         public async Task<ActionResult<IEnumerable<BingoBoard>>> GetBingoBoard()
         {
-            return await _context.BingoBoard.ToListAsync();
+            int month = DateTime.Now.Month;
+            List<BingoBoard> bingoBoards = await _context.BingoBoard
+                .Include(b => b.Fields) // (f.StartMonth <= month && month <= f.EndMonth && f.StartMonth < f.EndMonth) || (f.StartMonth <= month && month >= f.EndMonth && f.StartMonth > f.EndMonth)))
+                .Include(b => b.Map)
+                .ToListAsync();
+            bingoBoards.ForEach(b => b.Fields.FindAll(f => monthBetween(f.StartMonth, f.EndMonth, month)));
+            return bingoBoards;
         }
-
+        
         // GET: api/BingoBoards/5
         [HttpGet("{id}")]
         public async Task<ActionResult<BingoBoard>> GetBingoBoard(int id)
         {
-            var bingoBoard = await _context.BingoBoard.FindAsync(id);
+            var bingoBoard = _context.BingoBoard.Include(b => b.Fields).Include(b => b.Map).FirstOrDefault(x => x.Id == id);
+            
 
             if (bingoBoard == null)
             {

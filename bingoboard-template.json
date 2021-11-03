@@ -1,0 +1,18 @@
+    {
+     
+        "fields": [
+            {
+                "name": "test",
+                "description": "Blajædlakjflsakdjf",
+                "pictureUrl": "https://google.com",
+                "startMonth": 1,
+                "endMonth": 4
+            }
+
+        ],
+        "map": {
+            "name": "This is a map",
+            "url": "https://map.com"
+        },
+        "name": "test"
+    }
