@@ -1,10 +1,12 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Christiansoe.Models
 {
     public class Field
     {
 
+        [Key]
         public int Id { get; set; }
 
         public string Name { get; set; }

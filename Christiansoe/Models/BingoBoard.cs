@@ -2,13 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace Christiansoe.Models
 {
     public class BingoBoard
     {
+<<<<<<< HEAD
         private static Random rng = new Random();
 
+=======
+        [Key]
+>>>>>>> ab1a550e6da45e65e015d7b7a2cadc5a0c145418
         public int Id { get; set; }
 
 
