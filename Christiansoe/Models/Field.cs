@@ -1,4 +1,6 @@
-﻿namespace Christiansoe.Models
+﻿using System;
+
+namespace Christiansoe.Models
 {
     public class Field
     {
@@ -15,11 +17,11 @@
 
         public string VideoUrl { get; set; }
 
-        public string Dezzznutzzz { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
 
-        public string Test { get; set; }
 
-        //JØRGEN SKIIIIIIIR
+
 
 
 
