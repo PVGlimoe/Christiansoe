@@ -17,8 +17,10 @@ namespace Christiansoe.Models
 
         public string VideoUrl { get; set; }
 
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+        public int StartMonth  { get; set; }
+        public int EndMonth { get; set; }
+
+
 
 
 
