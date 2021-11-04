@@ -13,7 +13,7 @@ namespace Christiansoe.Models
         [Required]
         [MaxLength(100)]
         public String Name { get; set; }
-
+        
         public List<Route> Routes { get; set; }
     }
 }
