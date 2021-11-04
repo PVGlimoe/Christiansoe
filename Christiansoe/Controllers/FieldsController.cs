@@ -23,9 +23,10 @@ namespace Christiansoe.Controllers
 
         // GET: api/Fields
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Field>>> GetField()
+        public async Task<ActionResult<IEnumerable<Field>>> GetFields([FromQuery(Name = "BingoBoardId")] string BingoBoardId)
         {
-            return await _context.Field.ToListAsync();
+            int bingoBoardIdInt = Int32.Parse(BingoBoardId);
+            return _context.BingoBoard.Where(b => b.Id == bingoBoardIdInt).SelectMany(b => b.Fields).ToList();
         }
 
         // GET: api/Fields/5
