@@ -10,7 +10,9 @@ namespace Christiansoe.ViewModels
     public class BingoBoardViewModel
     {
         public int Id { get; set; }
-        public MapViewModel Map{ get; set; }
+
+        public MapViewModel? Map{ get; set; }
+
         public string Name { get; set; }
     }
 }

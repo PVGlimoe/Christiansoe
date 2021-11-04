@@ -51,18 +51,19 @@ namespace Christiansoe.Controllers
         public async Task<ActionResult<IEnumerable<BingoBoardViewModel>>> GetBingoBoard()
         {
             int month = DateTime.Now.Month;
-            List<BingoBoardViewModel> bingoBoards = _context.BingoBoard.Select(b => new BingoBoardViewModel
-            {
-                Id = b.Id,
-                Name = b.Name,
-                Map = new MapViewModel
+            List<BingoBoardViewModel> bingoBoards = _context.BingoBoard
+                .Select(b => new BingoBoardViewModel
                 {
-                    Id = b.Map.Id,
-                    Name = b.Map.Name,
-                    Url = b.Map.Url
-                },
-            }
-            ).ToList();
+                    Id = b.Id,
+                    Name = b.Name,
+                    Map = new MapViewModel
+                    {
+                        Id = b.Map.Id,
+                        Name = b.Map.Name,
+                        Url = b.Map.Url
+                    },
+                })
+                .ToList();
 
             return bingoBoards;
         }
