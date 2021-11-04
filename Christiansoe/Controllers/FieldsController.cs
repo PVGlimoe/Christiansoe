@@ -21,12 +21,40 @@ namespace Christiansoe.Controllers
             _context = context;
         }
 
+        private Boolean monthBetween(int startMonth, int endMonth, int month)
+        {
+            if (startMonth == 0 || endMonth == 0)
+            {
+                return true;
+            }
+            while (startMonth != month)
+            {
+                if (startMonth == endMonth)
+                {
+                    return false;
+                }
+                if (startMonth == 12)
+                {
+                    startMonth = 1;
+                }
+                else
+                {
+                    startMonth += 1;
+                }
+            }
+            return true;
+        }
+
         // GET: api/Fields
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Field>>> GetFields([FromQuery(Name = "BingoBoardId")] string BingoBoardId)
         {
+
             int bingoBoardIdInt = Int32.Parse(BingoBoardId);
-            return _context.BingoBoard.Where(b => b.Id == bingoBoardIdInt).SelectMany(b => b.Fields).ToList();
+            List<Field> fields = _context.BingoBoard.Where(b => b.Id == bingoBoardIdInt).SelectMany(b => b.Fields).ToList();
+            Random rng = new Random();
+            return fields.OrderBy(f => rng.Next()).ToList().GetRange(0,9);
+          
         }
 
         // GET: api/Fields/5
