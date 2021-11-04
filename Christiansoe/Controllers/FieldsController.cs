@@ -53,6 +53,10 @@ namespace Christiansoe.Controllers
             int bingoBoardIdInt = Int32.Parse(BingoBoardId);
             List<Field> fields = _context.BingoBoard.Where(b => b.Id == bingoBoardIdInt).SelectMany(b => b.Fields).ToList();
             Random rng = new Random();
+            int month = DateTime.Now.Month;
+            //Only selects the fields with the right start and end monts, and saves them in the field list
+            fields = fields.FindAll(f => monthBetween(f.StartMonth, f.EndMonth, month));
+            //Orders the list random, and picks out the first 9 fields and returns those
             return fields.OrderBy(f => rng.Next()).ToList().GetRange(0,9);
           
         }
