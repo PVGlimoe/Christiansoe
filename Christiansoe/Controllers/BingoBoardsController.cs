@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Christiansoe.Data;
 using Christiansoe.Models;
+using Christiansoe.ViewModels;
 
 namespace Christiansoe.Controllers
 {
@@ -47,15 +48,21 @@ namespace Christiansoe.Controllers
 
         // GET: api/BingoBoards
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<BingoBoard>>> GetBingoBoard()
+        public async Task<ActionResult<IEnumerable<BingoBoardViewModel>>> GetBingoBoard()
         {
             int month = DateTime.Now.Month;
-            List<BingoBoard> bingoBoards = await _context.BingoBoard
-                .Include(b => b.Fields) 
-                .Include(b => b.Map)
-                .ToListAsync();
-
-            bingoBoards.ForEach(b => b.Fields.FindAll(f => monthBetween(f.StartMonth, f.EndMonth, month)));
+            List<BingoBoardViewModel> bingoBoards = _context.BingoBoard.Select(b => new BingoBoardViewModel
+            {
+                Id = b.Id,
+                Name = b.Name,
+                Map = new MapViewModel
+                {
+                    Id = b.Map.Id,
+                    Name = b.Map.Name,
+                    Url = b.Map.Url
+                },
+            }
+            ).ToList();
 
             return bingoBoards;
         }
