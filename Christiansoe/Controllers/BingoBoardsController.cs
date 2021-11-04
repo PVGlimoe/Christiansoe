@@ -51,10 +51,12 @@ namespace Christiansoe.Controllers
         {
             int month = DateTime.Now.Month;
             List<BingoBoard> bingoBoards = await _context.BingoBoard
-                .Include(b => b.Fields) // (f.StartMonth <= month && month <= f.EndMonth && f.StartMonth < f.EndMonth) || (f.StartMonth <= month && month >= f.EndMonth && f.StartMonth > f.EndMonth)))
+                .Include(b => b.Fields) 
                 .Include(b => b.Map)
                 .ToListAsync();
+
             bingoBoards.ForEach(b => b.Fields.FindAll(f => monthBetween(f.StartMonth, f.EndMonth, month)));
+
             return bingoBoards;
         }
         

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Christiansoe.Models
@@ -21,6 +22,9 @@ namespace Christiansoe.Models
 
         public int StartMonth  { get; set; }
         public int EndMonth { get; set; }
+
+        public List<BingoBoard> BingoBoards { get; set; }
+
 
 
     }

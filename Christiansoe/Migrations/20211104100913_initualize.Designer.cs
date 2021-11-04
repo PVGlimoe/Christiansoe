@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Christiansoe.Migrations
 {
     [DbContext(typeof(ChristiansoeContext))]
-    [Migration("20211027114509_AddNutzz")]
-    partial class AddNutzz
+    [Migration("20211104100913_initualize")]
+    partial class initualize
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,21 @@ namespace Christiansoe.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.11")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("BingoBoardField", b =>
+                {
+                    b.Property<int>("BingoBoardsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("FieldsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("BingoBoardsId", "FieldsId");
+
+                    b.HasIndex("FieldsId");
+
+                    b.ToTable("BingoBoardField");
+                });
 
             modelBuilder.Entity("Christiansoe.Models.BingoBoard", b =>
                 {
@@ -48,14 +63,11 @@ namespace Christiansoe.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("BingoBoardId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Dezzznutzzz")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("EndMonth")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -66,12 +78,13 @@ namespace Christiansoe.Migrations
                     b.Property<string>("SoundUrl")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("StartMonth")
+                        .HasColumnType("int");
+
                     b.Property<string>("VideoUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("BingoBoardId");
 
                     b.ToTable("Field");
                 });
@@ -119,8 +132,8 @@ namespace Christiansoe.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Theme")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("ThemeId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -128,7 +141,41 @@ namespace Christiansoe.Migrations
 
                     b.HasIndex("MapId");
 
+                    b.HasIndex("ThemeId");
+
                     b.ToTable("Route");
+                });
+
+            modelBuilder.Entity("Christiansoe.Models.Theme", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Theme");
+                });
+
+            modelBuilder.Entity("BingoBoardField", b =>
+                {
+                    b.HasOne("Christiansoe.Models.BingoBoard", null)
+                        .WithMany()
+                        .HasForeignKey("BingoBoardsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Christiansoe.Models.Field", null)
+                        .WithMany()
+                        .HasForeignKey("FieldsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Christiansoe.Models.BingoBoard", b =>
@@ -138,13 +185,6 @@ namespace Christiansoe.Migrations
                         .HasForeignKey("MapId");
 
                     b.Navigation("Map");
-                });
-
-            modelBuilder.Entity("Christiansoe.Models.Field", b =>
-                {
-                    b.HasOne("Christiansoe.Models.BingoBoard", null)
-                        .WithMany("Fields")
-                        .HasForeignKey("BingoBoardId");
                 });
 
             modelBuilder.Entity("Christiansoe.Models.Route", b =>
@@ -157,14 +197,18 @@ namespace Christiansoe.Migrations
                         .WithMany()
                         .HasForeignKey("MapId");
 
+                    b.HasOne("Christiansoe.Models.Theme", null)
+                        .WithMany("Routes")
+                        .HasForeignKey("ThemeId");
+
                     b.Navigation("BingoBoard");
 
                     b.Navigation("Map");
                 });
 
-            modelBuilder.Entity("Christiansoe.Models.BingoBoard", b =>
+            modelBuilder.Entity("Christiansoe.Models.Theme", b =>
                 {
-                    b.Navigation("Fields");
+                    b.Navigation("Routes");
                 });
 #pragma warning restore 612, 618
         }

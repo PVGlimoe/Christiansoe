@@ -2,10 +2,29 @@
 
 namespace Christiansoe.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class initualize : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Field",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PictureUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SoundUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    VideoUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    StartMonth = table.Column<int>(type: "int", nullable: false),
+                    EndMonth = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Field", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Map",
                 columns: table => new
@@ -18,6 +37,19 @@ namespace Christiansoe.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Map", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Theme",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Theme", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -41,26 +73,27 @@ namespace Christiansoe.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Field",
+                name: "BingoBoardField",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PictureUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SoundUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    BingoBoardId = table.Column<int>(type: "int", nullable: true)
+                    BingoBoardsId = table.Column<int>(type: "int", nullable: false),
+                    FieldsId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Field", x => x.Id);
+                    table.PrimaryKey("PK_BingoBoardField", x => new { x.BingoBoardsId, x.FieldsId });
                     table.ForeignKey(
-                        name: "FK_Field_BingoBoard_BingoBoardId",
-                        column: x => x.BingoBoardId,
+                        name: "FK_BingoBoardField_BingoBoard_BingoBoardsId",
+                        column: x => x.BingoBoardsId,
                         principalTable: "BingoBoard",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_BingoBoardField_Field_FieldsId",
+                        column: x => x.FieldsId,
+                        principalTable: "Field",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -70,12 +103,12 @@ namespace Christiansoe.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Theme = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Length = table.Column<double>(type: "float", nullable: false),
                     HikingTime = table.Column<int>(type: "int", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     BingoBoardId = table.Column<int>(type: "int", nullable: true),
-                    MapId = table.Column<int>(type: "int", nullable: true)
+                    MapId = table.Column<int>(type: "int", nullable: true),
+                    ThemeId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -92,6 +125,12 @@ namespace Christiansoe.Migrations
                         principalTable: "Map",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Route_Theme_ThemeId",
+                        column: x => x.ThemeId,
+                        principalTable: "Theme",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -100,9 +139,9 @@ namespace Christiansoe.Migrations
                 column: "MapId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Field_BingoBoardId",
-                table: "Field",
-                column: "BingoBoardId");
+                name: "IX_BingoBoardField_FieldsId",
+                table: "BingoBoardField",
+                column: "FieldsId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Route_BingoBoardId",
@@ -113,18 +152,29 @@ namespace Christiansoe.Migrations
                 name: "IX_Route_MapId",
                 table: "Route",
                 column: "MapId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Route_ThemeId",
+                table: "Route",
+                column: "ThemeId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Field");
+                name: "BingoBoardField");
 
             migrationBuilder.DropTable(
                 name: "Route");
 
             migrationBuilder.DropTable(
+                name: "Field");
+
+            migrationBuilder.DropTable(
                 name: "BingoBoard");
+
+            migrationBuilder.DropTable(
+                name: "Theme");
 
             migrationBuilder.DropTable(
                 name: "Map");

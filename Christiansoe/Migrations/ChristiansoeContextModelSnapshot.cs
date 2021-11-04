@@ -19,6 +19,21 @@ namespace Christiansoe.Migrations
                 .HasAnnotation("ProductVersion", "5.0.11")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("BingoBoardField", b =>
+                {
+                    b.Property<int>("BingoBoardsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("FieldsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("BingoBoardsId", "FieldsId");
+
+                    b.HasIndex("FieldsId");
+
+                    b.ToTable("BingoBoardField");
+                });
+
             modelBuilder.Entity("Christiansoe.Models.BingoBoard", b =>
                 {
                     b.Property<int>("Id")
@@ -46,9 +61,6 @@ namespace Christiansoe.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("BingoBoardId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
@@ -71,8 +83,6 @@ namespace Christiansoe.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("BingoBoardId");
 
                     b.ToTable("Field");
                 });
@@ -142,11 +152,28 @@ namespace Christiansoe.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Theme");
+                });
+
+            modelBuilder.Entity("BingoBoardField", b =>
+                {
+                    b.HasOne("Christiansoe.Models.BingoBoard", null)
+                        .WithMany()
+                        .HasForeignKey("BingoBoardsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Christiansoe.Models.Field", null)
+                        .WithMany()
+                        .HasForeignKey("FieldsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Christiansoe.Models.BingoBoard", b =>
@@ -156,13 +183,6 @@ namespace Christiansoe.Migrations
                         .HasForeignKey("MapId");
 
                     b.Navigation("Map");
-                });
-
-            modelBuilder.Entity("Christiansoe.Models.Field", b =>
-                {
-                    b.HasOne("Christiansoe.Models.BingoBoard", null)
-                        .WithMany("Fields")
-                        .HasForeignKey("BingoBoardId");
                 });
 
             modelBuilder.Entity("Christiansoe.Models.Route", b =>
@@ -182,11 +202,6 @@ namespace Christiansoe.Migrations
                     b.Navigation("BingoBoard");
 
                     b.Navigation("Map");
-                });
-
-            modelBuilder.Entity("Christiansoe.Models.BingoBoard", b =>
-                {
-                    b.Navigation("Fields");
                 });
 
             modelBuilder.Entity("Christiansoe.Models.Theme", b =>

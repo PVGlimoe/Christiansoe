@@ -8,12 +8,9 @@ namespace Christiansoe.Models
 {
     public class BingoBoard
     {
-<<<<<<< HEAD
         private static Random rng = new Random();
 
-=======
         [Key]
->>>>>>> ab1a550e6da45e65e015d7b7a2cadc5a0c145418
         public int Id { get; set; }
 
 
@@ -29,9 +26,6 @@ namespace Christiansoe.Models
         public Map Map { get; set; }
 
         public string Name { get; set; }
-
-
     }
-
 
 }
