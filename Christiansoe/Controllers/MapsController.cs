@@ -25,7 +25,10 @@ namespace Christiansoe.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Map>>> GetMap()
         {
-            return await _context.Map.ToListAsync();
+            List<Map> maps = await _context.Map
+            .Include(m => m.Points)
+            .ToListAsync();
+            return maps;
         }
 
         // GET: api/Maps/5
