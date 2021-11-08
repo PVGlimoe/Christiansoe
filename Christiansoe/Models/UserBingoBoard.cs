@@ -11,13 +11,15 @@ namespace Christiansoe.Models
         public int Id { get; set; }
 
         [Required]
-        [MaxLength(100)]
-        public String Name { get; set; }
+        public bool Done { get; set; } = false;
 
+        [Required]
         public BingoBoard BingoBoard { get; set; }
+        
+        [Required]
+        public String UserId { get; set; }
 
-        public List<Route> Routes { get; set; }
-
-        public List<UserField> fields { get; set; }
+        public List<UserField> Fields { get; set; }
     }
 }
+
