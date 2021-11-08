@@ -16,11 +16,13 @@ namespace Christiansoe.Models
         [Required]
         [MaxLength(5000)]
         public string Description { get; set; }
-
+        [Url(ErrorMessage = "Forkert billede Url")]
         public string PictureUrl { get; set; }
 
+        [Url(ErrorMessage = "Forkert lyd Url")]
         public string SoundUrl { get; set; }
 
+        [Url(ErrorMessage = "Forkert Video Url")]
         public string VideoUrl { get; set; }
         
         [Required]

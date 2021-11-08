@@ -11,7 +11,7 @@ namespace Christiansoe.Models
         [MaxLength(100)]
         public string Name { get; set; }
         [Required]
-        [Url(ErrorMessage = "Forkert Url")]
+        [Url(ErrorMessage = "Forkert Kort Url")]
         public string Url { get; set; }
 
 
