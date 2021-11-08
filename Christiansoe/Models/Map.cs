@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Christiansoe.Models
 {
@@ -13,6 +14,8 @@ namespace Christiansoe.Models
         [Required]
         [Url(ErrorMessage = "Forkert Kort Url")]
         public string Url { get; set; }
+
+        public List<Point> Points { get; set; }
 
 
 

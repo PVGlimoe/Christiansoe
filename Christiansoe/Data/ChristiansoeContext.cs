@@ -27,6 +27,8 @@ namespace Christiansoe.Data
         public DbSet<BingoBoard> BingoBoard { get; set; }
 
         public DbSet<Christiansoe.Models.Theme> Theme { get; set; }
+
+       public DbSet<Point> Point { get; set; }
     }
 
 
