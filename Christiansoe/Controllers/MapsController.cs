@@ -26,7 +26,7 @@ namespace Christiansoe.Controllers
         public async Task<ActionResult<IEnumerable<Map>>> GetMap()
         {
             List<Map> maps = await _context.Map
-            .Include(m => m.Points)
+            .Include(m => m.Points.OrderBy(p => p.Position))
             .ToListAsync();
             return maps;
         }

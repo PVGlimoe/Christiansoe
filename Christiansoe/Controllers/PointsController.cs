@@ -25,7 +25,7 @@ namespace Christiansoe.Controllers
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Point>>> GetPoint()
         {
-            return await _context.Point.ToListAsync();
+            return await _context.Point.OrderBy(p => p.Position).ToListAsync();
         }
 
     // POST: api/Points
