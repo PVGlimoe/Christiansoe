@@ -35,7 +35,7 @@ namespace Christiansoe.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Map>> GetMap(int id)
         {
-            var map = await _context.Map.FindAsync(id);
+            var map = _context.Map.Include(m => m.Points.OrderBy(p => p.Position)).FirstOrDefault(x => x.Id == id);
 
             if (map == null)
             {
