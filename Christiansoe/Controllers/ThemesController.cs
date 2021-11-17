@@ -25,6 +25,7 @@ namespace Christiansoe.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Theme>>> GetTheme()
         {
+         
             return await _context.Theme.ToListAsync();
         }
 

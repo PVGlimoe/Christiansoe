@@ -34,14 +34,19 @@ namespace Christiansoe.Controllers
                 {
                     Id = b.Id,
                     Name = b.Name,
-                    Map = new MapViewModel
+                    Map = b.Map != null? new MapViewModel
                     {
                         Id = b.Map.Id,
                         Name = b.Map.Name,
                         Url = b.Map.Url
-                    },
+                    }:null,
                 })
                 .ToList();
+
+            //List<BingoBoardViewModel> bingoBoards = _context.BingoBoard
+            //    .Select(b => )
+            //    .ToList();
+
 
             return bingoBoards;
         }

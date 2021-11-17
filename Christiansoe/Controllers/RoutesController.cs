@@ -76,12 +76,19 @@ namespace Christiansoe.Controllers
         // POST: api/Routes
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Route>> PostRoute(Route route)
+        public async Task<ActionResult<Route>> PostRoute(Route route, [FromQuery(Name = "themeId")] int themeId)
         {
-            _context.Route.Add(route);
+
+            var theme = _context.Theme.Include(t => t.Routes).FirstOrDefault(x => x.Id == themeId);
+
+            theme.Routes.Add(route);
+
+            _context.Entry(theme).State = EntityState.Modified;
+
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetRoute", new { id = route.Id }, route);
+
+            return Ok();
         }
 
         // DELETE: api/Routes/5

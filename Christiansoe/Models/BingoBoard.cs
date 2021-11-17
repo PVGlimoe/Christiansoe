@@ -18,7 +18,6 @@ namespace Christiansoe.Models
         [Required]
         public List<Field> Fields {get; set;}
 
-        [Required]
         public Map Map { get; set; }
 
         [Required]

@@ -32,8 +32,7 @@ namespace Christiansoe.Models
         [Required]
         [Range(1, 12)]
         public int EndMonth { get; set; }
-        [Required]
-        public List<BingoBoard> BingoBoards { get; set; }
+
 
 
 
