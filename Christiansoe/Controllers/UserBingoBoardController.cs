@@ -26,21 +26,32 @@ namespace Christiansoe.Controllers
 
         // GET: api/UserBingoBoards
         [HttpGet]
-        public async Task<ActionResult<UserBingoBoard>> GetUserBingoBoard(
+        public async Task<ActionResult<UserBingoBoardViewModel>> GetUserBingoBoard(
                 [FromQuery(Name = "BingoBoardId")] int BingoBoardId,
                 [FromQuery(Name = "UserId")] string UserId
             )
         {
-            UserBingoBoard userBingoBoard = _context.UserBingoBoard
-                .Include(b => b.Fields)
-                .Include(b => b.BingoBoard)
-                .Include(b => b.BingoBoard.Map)
-                .Include(b => b.Fields)
+            UserBingoBoardViewModel userBingoBoard = _context.UserBingoBoard
                 .Where(
                     b => b.BingoBoard.Id == BingoBoardId 
                     && b.UserId == UserId 
                     && !b.Done
-                ).FirstOrDefault();
+                )
+                .Include(b => b.BingoBoard)
+                .Select(b => new UserBingoBoardViewModel
+                    {
+                        Id = b.Id,
+                        Name = b.BingoBoard.Name,
+                        Map = b.BingoBoard.Map != null? new MapViewModel
+                        {
+                            Id = b.BingoBoard.Map.Id,
+                            Name = b.BingoBoard.Map.Name,
+                            Url = b.BingoBoard.Map.Url
+                        }:null,
+                        Done = b.Done,
+                        UserId = b.UserId
+                    })
+                .FirstOrDefault();
 
             if (userBingoBoard == null){
                 // create bingoboard

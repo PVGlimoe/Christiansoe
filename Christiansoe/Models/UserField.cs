@@ -16,7 +16,6 @@ namespace Christiansoe.Models
         [Required]
         public int Position { get; set; }
 
-        [Required]
         public Field Field { get; set; }
 
     }

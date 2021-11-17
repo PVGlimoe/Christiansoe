@@ -12,12 +12,18 @@ namespace Christiansoe.ViewModels
 
         public String Name { get; set; }
 
-        public String userId { get; set; }
+        public string Description { get; set; }
 
-        public bool isMarked { get; set; } = false;
+        public string PictureUrl { get; set; }
 
-        public int position { get; set; }
+        public string SoundUrl { get; set; }
 
-        public FieldViewModel field { get; set; }
+        public string VideoUrl { get; set; }
+
+        public String UserId { get; set; }
+
+        public bool IsMarked { get; set; } = false;
+
+        public int Position { get; set; }
     }
 }
