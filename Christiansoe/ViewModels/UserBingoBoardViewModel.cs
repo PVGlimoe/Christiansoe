@@ -16,6 +16,6 @@ namespace Christiansoe.ViewModels
 
         public MapViewModel Map { get; set; }
 
+        public List<UserFieldViewModel> fields {get; set;}
     }
 }
-
