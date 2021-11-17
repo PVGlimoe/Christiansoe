@@ -63,7 +63,7 @@ namespace Christiansoe.Controllers
         // POST: api/UserBingoBoards
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<BingoBoard>> UserBingoBoard(UserBingoBoardDTO userBingoBoardDTO)
+        public async Task<ActionResult<UserBingoBoardViewModel>> UserBingoBoard(UserBingoBoardDTO userBingoBoardDTO)
         {
             var userId = userBingoBoardDTO.UserId;
             var bingoboardId = userBingoBoardDTO.BingoBoardId;
@@ -100,7 +100,20 @@ namespace Christiansoe.Controllers
             _context.UserBingoBoard.Add(userBingoBoard);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetUserBingoBoard", new { id = userBingoBoard.Id }, userBingoBoard);
+            return CreatedAtAction("GetUserBingoBoard", new { id = userBingoBoard.Id }, new UserBingoBoardViewModel
+                {
+                    Id = userBingoBoard.Id,
+                    Name = userBingoBoard.BingoBoard.Name,
+                    Map = userBingoBoard.BingoBoard.Map != null? new MapViewModel
+                    {
+                        Id = userBingoBoard.BingoBoard.Map.Id,
+                        Name = userBingoBoard.BingoBoard.Map.Name,
+                        Url = userBingoBoard.BingoBoard.Map.Url
+                    }:null,
+                    Done = userBingoBoard.Done,
+                    UserId = userBingoBoard.UserId
+                }
+            );
         }
     }
 }
