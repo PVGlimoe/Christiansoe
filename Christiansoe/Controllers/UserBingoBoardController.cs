@@ -115,5 +115,41 @@ namespace Christiansoe.Controllers
                 }
             );
         }
+
+        // PUT: api/Fields/5
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutUserBingoBoard(int id, UserBingoBoard @userBingoBoard)
+        {
+            if (id != @userBingoBoard.Id)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(@userBingoBoard).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!UserBingoBoardExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+        private bool UserBingoBoardExists(int id)
+        {
+            return _context.UserBingoBoard.Any(e => e.Id == id);
+        }
     }
 }
