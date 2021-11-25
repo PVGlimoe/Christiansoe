@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Christiansoe.Data;
 using Christiansoe.Models;
+using Christiansoe.ViewModels;
 
 namespace Christiansoe.Controllers
 {
@@ -23,14 +24,23 @@ namespace Christiansoe.Controllers
 
         // GET: api/Routes
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Route>>> GetRoute()
+        public async Task<ActionResult<IEnumerable<RouteViewModel>>> GetRoute([FromQuery(Name = "themeId")] int themeId)
         {
-            return await _context.Route.ToListAsync();
+            List<RouteViewModel> routes = _context.Theme.Where(t => t.Id == themeId).SelectMany(t => t.Routes, (t, r) => new RouteViewModel
+            {
+                Id = r.Id,
+                Name = r.Name,
+                Length = r.Length,
+                HikingTime = r.HikingTime,
+                Description = r.Description,
+                BingoBoardId = r.BingoBoard.Id,
+            }).ToList();
+            return routes;
         }
 
         // GET: api/Routes/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Route>> GetRoute(int id)
+        public async Task<ActionResult<Route>> GetRouteById(int id)
         {
             var route = await _context.Route.FindAsync(id);
 

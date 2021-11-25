@@ -47,11 +47,11 @@ namespace Christiansoe.Controllers
 
         // GET: api/Fields
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Field>>> GetFields([FromQuery(Name = "BingoBoardId")] string BingoBoardId)
+        public async Task<ActionResult<IEnumerable<Field>>> GetFields([FromQuery(Name = "BingoBoardId")] int bingoBoardId)
         {
 
-            int bingoBoardIdInt = Int32.Parse(BingoBoardId);
-            List<Field> fields = _context.BingoBoard.Where(b => b.Id == bingoBoardIdInt).SelectMany(b => b.Fields).ToList();
+ 
+            List<Field> fields = _context.BingoBoard.Where(b => b.Id == bingoBoardId).SelectMany(b => b.Fields).ToList();
             Random rng = new Random();
             int month = DateTime.Now.Month;
             //Only selects the fields with the right start and end monts, and saves them in the field list
