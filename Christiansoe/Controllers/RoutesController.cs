@@ -24,17 +24,42 @@ namespace Christiansoe.Controllers
 
         // GET: api/Routes
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<RouteViewModel>>> GetRoute([FromQuery(Name = "themeId")] int themeId)
+        public async Task<ActionResult<IEnumerable<RouteViewModel>>> GetRoute([FromQuery(Name = "themeId")] int? themeId, [FromQuery(Name = "name")] string? name)
         {
-            List<RouteViewModel> routes = _context.Theme.Where(t => t.Id == themeId).SelectMany(t => t.Routes, (t, r) => new RouteViewModel
-            {
-                Id = r.Id,
-                Name = r.Name,
-                Length = r.Length,
-                HikingTime = r.HikingTime,
-                Description = r.Description,
-                BingoBoardId = r.BingoBoard.Id,
-            }).ToList();
+            List<RouteViewModel> routes;
+            if(themeId != null){
+                routes = _context.Theme.Where(t => t.Id == themeId).SelectMany(t => t.Routes, (t, r) => new RouteViewModel
+                {
+                    Id = r.Id,
+                    Name = r.Name,
+                    Length = r.Length,
+                    HikingTime = r.HikingTime,
+                    Description = r.Description,
+                    BingoBoardId = r.BingoBoard.Id,
+                }).ToList();
+            }
+            else if(name != null){
+                routes = _context.Route.Where(r => r.Name.Equals(name)).Select(r => new RouteViewModel
+                {
+                    Id = r.Id,
+                    Name = r.Name,
+                    Length = r.Length,
+                    HikingTime = r.HikingTime,
+                    Description = r.Description,
+                    BingoBoardId = r.BingoBoard.Id,
+                }).ToList();
+            }
+            else {
+                routes = _context.Route.Select(r => new RouteViewModel
+                {
+                    Id = r.Id,
+                    Name = r.Name,
+                    Length = r.Length,
+                    HikingTime = r.HikingTime,
+                    Description = r.Description,
+                    BingoBoardId = r.BingoBoard.Id,
+                }).ToList();
+            }
             return routes;
         }
 
