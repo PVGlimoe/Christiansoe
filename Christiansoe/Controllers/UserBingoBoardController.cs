@@ -78,7 +78,7 @@ namespace Christiansoe.Controllers
             Random rng = new Random();
             int month = DateTime.Now.Month;
             int position = 1;
-            var fields = bingoboard.Fields.FindAll(f => DateService.monthBetween(f.StartMonth, f.EndMonth, month)).GetRange(0, 9);
+            var fields = bingoboard.Fields.FindAll(f => DateService.monthBetween(f.StartMonth, f.EndMonth, month)).OrderBy(f => rng.Next()).ToList().GetRange(0, 9);
             foreach( Field field in fields){
                 UserField userField = new UserField();
                 userField.UserId = userId;
