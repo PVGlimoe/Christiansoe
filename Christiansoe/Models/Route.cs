@@ -27,11 +27,5 @@ namespace Christiansoe.Models
 
         public Map Map { get; set; }
 
-
-
-
-
-
-
     }
 }

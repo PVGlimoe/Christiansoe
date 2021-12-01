@@ -20,6 +20,8 @@ namespace Christiansoe.ViewModels
 
         public int BingoBoardId { get; set; }
 
+        public int? MapId { get; set; }
+
        
     }
 }

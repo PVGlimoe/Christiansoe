@@ -36,6 +36,7 @@ namespace Christiansoe.Controllers
                     HikingTime = r.HikingTime,
                     Description = r.Description,
                     BingoBoardId = r.BingoBoard.Id,
+                    MapId = r.Map != null ? r.Map.Id : null
                 }).ToList();
             }
             else if(name != null){
@@ -47,6 +48,7 @@ namespace Christiansoe.Controllers
                     HikingTime = r.HikingTime,
                     Description = r.Description,
                     BingoBoardId = r.BingoBoard.Id,
+                    MapId = r.Map != null ? r.Map.Id : null
                 }).ToList();
             }
             else {
@@ -58,6 +60,7 @@ namespace Christiansoe.Controllers
                     HikingTime = r.HikingTime,
                     Description = r.Description,
                     BingoBoardId = r.BingoBoard.Id,
+                    MapId = r.Map != null ? r.Map.Id : null
                 }).ToList();
             }
             return routes;
