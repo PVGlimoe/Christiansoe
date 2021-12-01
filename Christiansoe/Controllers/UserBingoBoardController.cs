@@ -119,14 +119,16 @@ namespace Christiansoe.Controllers
         // PUT: api/Fields/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUserBingoBoard(int id, UserBingoBoard @userBingoBoard)
+        public async Task<IActionResult> PutUserBingoBoard(int id, UserBingoBoardDTO userBingoBoard)
         {
-            if (id != @userBingoBoard.Id)
+            if (id != userBingoBoard.Id)
             {
                 return BadRequest();
             }
+            UserBingoBoard existingUserBingoBoard = await _context.UserBingoBoard.FindAsync(userBingoBoard.Id);
+            existingUserBingoBoard.Done = userBingoBoard.Done;
 
-            _context.Entry(@userBingoBoard).State = EntityState.Modified;
+            _context.Entry(existingUserBingoBoard).State = EntityState.Modified;
 
             try
             {
